@@ -2,7 +2,7 @@
 ## EPITECH PROJECT, 2018
 ## Makefile
 ## File description:
-## make / clena / fclean / re
+## make / clean / fclean / re / debug / tests_run
 ##
 
 ## --------- COLOR ------##
