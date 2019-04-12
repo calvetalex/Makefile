@@ -15,3 +15,7 @@ Voici un makefile avec les règles *all*, *clean*, *debug*, *test_run*, *fclean*
 
 #### Make tests ->
 ![makeTest](http://www.alexandrecalvet.com/test_done.png)
+
+__TODO__
+
+Séparer les .o et les .c
