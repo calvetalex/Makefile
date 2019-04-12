@@ -2,7 +2,7 @@
 ## EPITECH PROJECT, 2018
 ## Makefile
 ## File description:
-## make / clean / fclean / re / debug / tests_run
+## make / clena / fclean / re
 ##
 
 ## --------- COLOR ------##
@@ -67,8 +67,7 @@ BUILD   =   release
 ## --------- RULES --------##
 
 all:
-	@make -s $(BINNAME)
-	@make -s clean && \
+	@make -s $(BINNAME) && \
 	$(ECHO) $(GREEN) "[OK]"$(TEAL)"  Done : " $@ $(DEFAULT)  || \
 	$(ECHO) $(ERROR) "[ERROR]" $(YELLOW) $(BINNAME) $(DEFAULT)
 
@@ -79,7 +78,7 @@ $(BINNAME)	:	$(OBJ) $(OBJ_MAIN)
 %.o	:	%.c
 		@$(CC)  $(CFLAGS) -c $< -o $@ && \
 		$(ECHO) $(GREEN) "[OK] " $(DEFAULT) $(TEAL) $<  $(DEFAULT)  " -----> " $(GREEN) $@ $(DEFAULT) || \
-		$(ECHO) $(ERROR) " [ERROR] doesn't exist " $(YELLOW) $^ $(DEFAULT)
+		$(ECHO) $(ERROR) " [ERROR] can't find " $(YELLOW) $^ $(DEFAULT)
 
 
 set_rules	:
