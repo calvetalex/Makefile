@@ -2,7 +2,7 @@
 ## EPITECH PROJECT, 2018
 ## Makefile
 ## File description:
-## make / clena / fclean / re
+## make / clean / fclean / re
 ##
 
 ## --------- COLOR ------##
@@ -18,7 +18,7 @@ ECHO	=	echo -e
 
 ## -------- COMPIL ----##
 
-CC	=	gcc
+XX	=	g++
 
 ## ------- DIR --------##
 SRCDIR	=	./src
@@ -33,30 +33,30 @@ MAIN	=	$(SRCDIR)/main.c
 
 SRC	=	$(SRCDIR)/	\
 
-OBJ	=	$(SRC:.c=.o)
+OBJ	=	$(SRC:.cpp=.o)
 
-OBJ_MAIN	=	$(MAIN:.c=.o)
+OBJ_MAIN	=	$(MAIN:.cpp=.o)
 
-OBJ_TEST	=	$(SRCTEST:.c=.o)
+OBJ_TEST	=	$(SRCTEST:.cpp=.o)
 
 ## ------- FLAGS --------##
 
-cflags.common	:=	-W -Wall -Wextra -I./include/ -pedantic
-cflags.debug	:=	-g -g3
-cflags.release	:=
-cflags.tests	:=
+cxxflags.common	:=	-W -Wall -Wextra -I./include/ -pedantic
+cxxflags.debug	:=	-g -g3
+cxxflags.release	:=
+cxxflags.tests	:=
 
-ldflags.common	:=	-L./lib/ -lmy
+ldflags.common	:=
 ldflags.debug	:=
 ldflags.release	:=
 ldflags.tests	:=	-lcriterion -lgcov  --coverage
 
-CFLAGS	:=	${cflags.${BUILD}} ${cflags.common}
+CXXFLAGS	:=	${cxxflags.${BUILD}} ${cxxflags.common}
 LDFLAGS	:=	${ldflags.${BUILD}} ${ldflags.common}
 
 ## ------- BIN ----------##
 
-BINNAME	=	
+BINNAME	=
 
 TEST_BIN	=	$(BINNAME)_test
 
@@ -73,36 +73,36 @@ all:
 
 $(BINNAME)	:	$(OBJ) $(OBJ_MAIN)
 				@make -s -C ./lib/
-				@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CFLAGS) $(LDFLAGS)
+				@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS)
 
-%.o	:	%.c
-		@$(CC)  $(CFLAGS) -c $< -o $@ && \
+%.o	:	%.cpp
+		@$(CC)  $(CXXFLAGS) -c $< -o $@ && \
 		$(ECHO) $(GREEN) "[OK] " $(DEFAULT) $(TEAL) $<  $(DEFAULT)  " -----> " $(GREEN) $@ $(DEFAULT) || \
 		$(ECHO) $(ERROR) " [ERROR] can't find " $(YELLOW) $^ $(DEFAULT)
 
 
 set_rules	:
 			$(eval BUILD=tests)
-			$(eval CFLAGS=${cflags.tests} $(cflags.common))
+			$(eval CXXFLAGS=${cxxflags.tests} $(cxxflags.common))
 			$(eval LDFLAGS=${ldflags.tests} $(ldflags.common))
 
 
 $(TEST_BIN)	:	set_rules $(OBJ_TEST) $(OBJ)
 			@make -s -C ./lib/
-			@$(CC) -o $(TEST_BIN) $(OBJ_TEST) $(OBJ) $(CFLAGS) $(LDFLAGS)
+			@$(CC) -o $(TEST_BIN) $(OBJ_TEST) $(OBJ) $(CXXFLAGS) $(LDFLAGS)
 
 tests_run	:	set_rules $(TEST_BIN)
 			@./$(TEST_BIN) && \
 			$(ECHO) $(GREEN) "[OK]"$(TEAL)"  Done : " $@ $(DEFAULT)  || \
 			$(ECHO) $(ERROR) "[ERROR]" $(YELLOW) $(BINNAME) $(DEFAULT)
 
-set_rules_debug	:	
+set_rules_debug	:
 			$(eval BUILD=debug)
-			$(eval CFLAGS=${cflags.debug} $(cflags.common))
+			$(eval CXXFLAGS=${cxxflags.debug} $(cxxflags.common))
 			$(eval LDFLAGS=${ldflags.debug} $(ldflags.common))
 
 debug		:	 set_rules_debug $(OBJ) $(OBJ_MAIN)
-			@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CFLAGS) $(LDFLAGS) && \
+			@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS) && \
 		        $(ECHO) $(GREEN) "[OK]"$(TEAL)"  Done : " $@ $(DEFAULT)  || \
 			$(ECHO) $(ERROR) "[ERROR]" $(YELLOW) $(BINNAME) $(DEFAULT)
 
@@ -112,7 +112,7 @@ clean:
 	@$(foreach i, $(OBJ), $(shell rm -rf $(i)) echo -e $(MAGENTA) "\tRemoved:  $(i)" $(DEFAULT);)
 	@echo -e $(MAGENTA) "\tRemoved: $(OBJ_MAIN)" $(DEFAULT)
 	@rm -rf $(OBJ_MAIN)
-	@$(foreach k, $(OBJ_TEST), $(shell rm -rf $(i)) echo -e $(MAGENTA) "\tRemoved:  $(k)" $(DEFAULT);) 
+	@$(foreach k, $(OBJ_TEST), $(shell rm -rf $(i)) echo -e $(MAGENTA) "\tRemoved:  $(k)" $(DEFAULT);)
 	@find -name "*.gcda" -delete
 	@find -name "*.gcno" -delete
 	@find -name "*.gcov" -delete && \
