@@ -29,7 +29,7 @@ TESTDIR	=	./tests
 
 SRCTEST	=	$(TESTDIR)/ \
 
-MAIN	=	$(SRCDIR)/main.c
+MAIN	=	$(SRCDIR)/main.cpp
 
 SRC	=	$(SRCDIR)/	\
 
@@ -72,8 +72,7 @@ all:
 	$(ECHO) $(ERROR) "[ERROR]" $(YELLOW) $(BINNAME) $(DEFAULT)
 
 $(BINNAME)	:	$(OBJ) $(OBJ_MAIN)
-				@make -s -C ./lib/
-				@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS)
+			@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS)
 
 %.o	:	%.cpp
 		@$(CC)  $(CXXFLAGS) -c $< -o $@ && \
@@ -88,7 +87,6 @@ set_rules	:
 
 
 $(TEST_BIN)	:	set_rules $(OBJ_TEST) $(OBJ)
-			@make -s -C ./lib/
 			@$(CC) -o $(TEST_BIN) $(OBJ_TEST) $(OBJ) $(CXXFLAGS) $(LDFLAGS)
 
 tests_run	:	set_rules $(TEST_BIN)
@@ -108,7 +106,6 @@ debug		:	 set_rules_debug $(OBJ) $(OBJ_MAIN)
 
 
 clean:
-	@make -s clean -C ./lib/
 	@$(foreach i, $(OBJ), $(shell rm -rf $(i)) echo -e $(MAGENTA) "\tRemoved:  $(i)" $(DEFAULT);)
 	@echo -e $(MAGENTA) "\tRemoved: $(OBJ_MAIN)" $(DEFAULT)
 	@rm -rf $(OBJ_MAIN)
@@ -121,7 +118,6 @@ clean:
 
 
 fclean:	clean
-	@make -s fclean -C ./lib/
 	@rm -rf $(BINNAME)
 	@rm -rf $(TEST_BIN) && \
         $(ECHO) $(GREEN) "[OK]"$(TEAL)"  Done : " $@ $(DEFAULT)  || \
