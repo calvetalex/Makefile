@@ -51,18 +51,14 @@ ldflags.debug	:=
 ldflags.release	:=
 ldflags.tests	:=	-lcriterion -lgcov  --coverage
 
-CXXFLAGS	:=	${cxxflags.${BUILD}} ${cxxflags.common}
-LDFLAGS	:=	${ldflags.${BUILD}} ${ldflags.common}
+CXXFLAGS	:=	${cxxflags.release} ${cxxflags.common}
+LDFLAGS	:=	${ldflags.release} ${ldflags.common}
 
 ## ------- BIN ----------##
 
 BINNAME	=
 
 TEST_BIN	=	$(BINNAME)_test
-
-## ------- BUILD ----------##
-
-BUILD   =   release
 
 ## --------- RULES --------##
 
@@ -72,22 +68,21 @@ all:
 	$(ECHO) $(ERROR) "[ERROR]" $(YELLOW) $(BINNAME) $(DEFAULT)
 
 $(BINNAME)	:	$(OBJ) $(OBJ_MAIN)
-			@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS)
+			@$(XX) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS)
 
 %.o	:	%.cpp
-		@$(CC)  $(CXXFLAGS) -c $< -o $@ && \
+		@$(XX) $(CXXFLAGS) -c $< -o $@ && \
 		$(ECHO) $(GREEN) "[OK] " $(DEFAULT) $(TEAL) $<  $(DEFAULT)  " -----> " $(GREEN) $@ $(DEFAULT) || \
 		$(ECHO) $(ERROR) " [ERROR] can't find " $(YELLOW) $^ $(DEFAULT)
 
 
 set_rules	:
-			$(eval BUILD=tests)
 			$(eval CXXFLAGS=${cxxflags.tests} $(cxxflags.common))
 			$(eval LDFLAGS=${ldflags.tests} $(ldflags.common))
 
 
 $(TEST_BIN)	:	set_rules $(OBJ_TEST) $(OBJ)
-			@$(CC) -o $(TEST_BIN) $(OBJ_TEST) $(OBJ) $(CXXFLAGS) $(LDFLAGS)
+			@$(XX) -o $(TEST_BIN) $(OBJ_TEST) $(OBJ) $(CXXFLAGS) $(LDFLAGS)
 
 tests_run	:	set_rules $(TEST_BIN)
 			@./$(TEST_BIN) && \
@@ -95,12 +90,11 @@ tests_run	:	set_rules $(TEST_BIN)
 			$(ECHO) $(ERROR) "[ERROR]" $(YELLOW) $(BINNAME) $(DEFAULT)
 
 set_rules_debug	:
-			$(eval BUILD=debug)
 			$(eval CXXFLAGS=${cxxflags.debug} $(cxxflags.common))
 			$(eval LDFLAGS=${ldflags.debug} $(ldflags.common))
 
 debug		:	 set_rules_debug $(OBJ) $(OBJ_MAIN)
-			@$(CC) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS) && \
+			@$(XX) -o $(BINNAME) $(OBJ) $(OBJ_MAIN) $(CXXFLAGS) $(LDFLAGS) && \
 		        $(ECHO) $(GREEN) "[OK]"$(TEAL)"  Done : " $@ $(DEFAULT)  || \
 			$(ECHO) $(ERROR) "[ERROR]" $(YELLOW) $(BINNAME) $(DEFAULT)
 
