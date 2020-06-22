@@ -62,20 +62,20 @@ all:	$(NAME)
 
 
 $(NAME):	$(OBJ)
-	@ar rc $(NAME) && \
+	@ar rc $(NAME) $(OBJ) && \
 	$(ECHO) $(GREEN) "["$@"] lib is ready. To use it with gcc use -L and -l options." $(DEFAULT)  || \
-	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(BINNAME) $(DEFAULT)
+	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(NAME) $(DEFAULT)
 
 clean:
 	@$(foreach i, $(OBJ), $(shell rm -rf $(i)) echo -e $(MAGENTA) "Deleting...\t\t$(i)" $(DEFAULT);)
 	@$(RM) *~ && \
 	$(ECHO) $(GREEN) "[OK] clean rule success msg" $(DEFAULT)  || \
-	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(BINNAME) $(DEFAULT)
+	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(NAME) $(DEFAULT)
 
 fclean:	clean
 	@rm -f $(NAME) && \
 	$(ECHO) $(GREEN) "[OK]"$(TEAL)" clean done and lib removed." $(DEFAULT)  || \
-	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(BINNAME) $(DEFAULT)
+	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(NAME) $(DEFAULT)
 
 re:	fclean all
 
