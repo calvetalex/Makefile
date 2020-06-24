@@ -49,6 +49,19 @@ NAME	=	libmy.a
 
 ##
 ## ===============
+##	CFLAGS
+## ===============
+##
+cflags.common	:=	-W -Wall -Wextra -I./include/ -pedantic
+cflags.debug	:=	-g -g3
+cflags.release	:=
+cflags.tests	:=
+
+
+CFLAGS	:=	${cflags.release} ${cflags.common}
+
+##
+## ===============
 ##	RULES
 ## ===============
 ##
@@ -56,7 +69,7 @@ NAME	=	libmy.a
 all:	$(NAME)
 
 %.o	:	%.c
-		@$(CC) -c $< -o $@ && \
+		@$(CC) $(CFLAGS) -c $< -o $@ && \
 		$(ECHO) $(GREEN) "[OBJ] " $(TEAL) $@ "\thas been created from\t" $@ $(DEFAULT) || \
 		$(ECHO) $(ERROR) " [ERROR] " $(ERRORMSG) " can't find " $^ $(DEFAULT)
 
@@ -64,6 +77,14 @@ all:	$(NAME)
 $(NAME):	$(OBJ)
 	@ar rc $(NAME) $(OBJ) && \
 	$(ECHO) $(GREEN) "["$@"] lib is ready. To use it with gcc use -L and -l options." $(DEFAULT)  || \
+	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(NAME) $(DEFAULT)
+
+set_rule_debug:
+	$(eval CFLAGS=${cflags.debug} $(cflags.common))
+
+debug:	set_rule_debug $(OBJ)
+	@ar rc $(NAME) $(OBJ) && \
+	$(ECHO) $(GREEN) "["$@"] lib was created with DEBUG FLAGS." $(DEFAULT)  || \
 	$(ECHO) $(ERROR) "[ERROR]" $(ERRORMSG) $(NAME) $(DEFAULT)
 
 clean:
