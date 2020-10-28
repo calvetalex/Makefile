@@ -1,7 +1,7 @@
-# Makefile  
-  
-__MAKEFILE__  
-  
+# Makefile
+
+__MAKEFILE__
+
 Voici un makefile avec les règles *all*, *clean*, *debug*, *test_run*, *fclean* et *re*. Vous permet de lancer vos projets facilement avec un affichage personnalisé en fonction de l'avancée du make.
 
 ## Personnalisation:
@@ -10,15 +10,15 @@ Vous pouvez personnaliser les couleurs utilisées dans le Makefile, pour cela vo
 
 ------
 
-## Screenshots :  
+## Screenshots :
 #### Make ->
-![make](http://www.alexandrecalvet.com/make_done.png)
+![make](https://github.com/calvetalex/Makefile/blob/master/.github/images/make_done.png)
 
 #### Make  error->
-![makeError](http://www.alexandrecalvet.com/error_make.png)
+![makeError](https://github.com/calvetalex/Makefile/blob/master/.github/images/error_make.png)
 
 #### Make tests ->
-![makeTest](http://www.alexandrecalvet.com/test_done.png)
+![makeTest](https://github.com/calvetalex/Makefile/blob/master/.github/images/test_done.png)
 
 __TODO__
 
